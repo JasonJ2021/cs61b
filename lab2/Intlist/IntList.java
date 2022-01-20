@@ -81,17 +81,55 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList ptr1 = A ,ptr2 = B;
+        while(ptr1.rest != null){
+            ptr1 = ptr1.rest;
+        }
+        while(ptr2 != null){
+            ptr1.rest = new IntList(ptr2.first , null);
+            ptr1 = ptr1.rest;
+            ptr2 = ptr2.rest;
+        }
+        return A;
     }
 
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
+
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList C;
+        if (A != null) {
+            C = new IntList(A.first, null);
+            IntList ptr1 = C;
+            IntList ptr2 = A;
+            while (ptr2.rest != null) {
+                ptr1.rest = new IntList(ptr2.rest.first, null);
+                ptr1 = ptr1.rest;
+                ptr2 = ptr2.rest;
+            }
+            ptr2 = B;
+            while (ptr2 != null) {
+                ptr1.rest = new IntList(ptr2.first, null);
+                ptr1 = ptr1.rest;
+                ptr2 = ptr2.rest;
+            }
+            return C;
+        }else if (B != null){
+            C = new IntList(B.first , null);
+            IntList ptr1 = C;
+            IntList ptr2 = B;
+            while (ptr2.rest != null) {
+                ptr1.rest = new IntList(ptr2.rest.first, null);
+                ptr1 = ptr1.rest;
+                ptr2 = ptr2.rest;
+            }
+            return C;
+        }else{
+            return new IntList();
+        }
+
     }
 
 
