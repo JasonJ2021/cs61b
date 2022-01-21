@@ -16,7 +16,7 @@ public class NBody {
         }
         return planets;
     }
-    public static void showBackground(double Radius){
+    private static void showBackground(double Radius){
         String background = "images/starfield.jpg";
         StdDraw.setScale(-Radius, Radius);
         StdDraw.picture(0, 0, background , 2*Radius,2*Radius);
