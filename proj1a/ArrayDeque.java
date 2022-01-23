@@ -21,22 +21,38 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         T[] newarray = (T[]) new Object[capacity];
 
-        if (size == array.length || nextFirst > nextLast) {
+        if (size == array.length) {
             /*
              * copy array[0] ~ array[nextLast - 1] to newarray[0]~ newarray[nextLast - 1]
              * copy array[nextFirst + 1] ~ array[array.lengh - 1] total array.length-nextFirst - 1 blocks to
              * newarray[newarray.length - 1 - array.length + nextFirst + 1 + 1] ~ newarray[newarray.length - 1]
              * for example :
              * */
-            System.arraycopy(array, 0, newarray, 0, nextLast);
-            System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
-            nextFirst = nextFirst + newarray.length - array.length;
+            if(nextLast == 0){
+                System.arraycopy(array,0 , newarray , 0 , array.length);
+                nextFirst = newarray.length - 1;
+                nextLast = array.length;
+            }else{
+                System.arraycopy(array, 0, newarray, 0, nextLast);
+                System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
+                nextFirst = nextFirst + newarray.length - array.length;
+            }
+
         } else {
             /*this situation
              *  nextFirst + 1 ~ nextLast - 1  hava data blocks
              *  only need to copy array[0] ~ a[nextLast - 1]
              * */
-            System.arraycopy(array, 0, newarray, 0, nextLast);
+            if(nextFirst < nextLast){
+                System.arraycopy(array, nextFirst + 1, newarray, 0, size);
+                nextFirst = newarray.length - 1;
+                nextLast = size;
+            }else{
+                System.arraycopy(array, 0, newarray, 0, nextLast);
+                System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
+                nextFirst = nextFirst + newarray.length - array.length;
+            }
+
         }
 
         array = newarray;
@@ -113,4 +129,15 @@ public class ArrayDeque<T> {
         return array[(nextFirst + index + 1) % array.length];
     }
 
+    public static void main(String[] args) {
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        for(int i = 0 ; i < 50 ;i++){
+            list.addLast(i);
+        }
+        System.out.println();
+        for(int i = 0 ; i < 50 ; i++){
+            list.removeFirst();
+        }
+        System.out.println();
+    }
 }
