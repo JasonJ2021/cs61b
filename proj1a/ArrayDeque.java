@@ -28,11 +28,11 @@ public class ArrayDeque<T> {
              * newarray[newarray.length - 1 - array.length + nextFirst + 1 + 1] ~ newarray[newarray.length - 1]
              * for example :
              * */
-            if(nextLast == 0){
-                System.arraycopy(array,0 , newarray , 0 , array.length);
+            if (nextLast == 0) {
+                System.arraycopy(array, 0, newarray, 0, array.length);
                 nextFirst = newarray.length - 1;
                 nextLast = array.length;
-            }else{
+            } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
                 System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
                 nextFirst = nextFirst + newarray.length - array.length;
@@ -43,11 +43,11 @@ public class ArrayDeque<T> {
              *  nextFirst + 1 ~ nextLast - 1  hava data blocks
              *  only need to copy array[0] ~ a[nextLast - 1]
              * */
-            if(nextFirst < nextLast){
+            if (nextFirst < nextLast) {
                 System.arraycopy(array, nextFirst + 1, newarray, 0, size);
                 nextFirst = newarray.length - 1;
                 nextLast = size;
-            }else{
+            } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
                 System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
                 nextFirst = nextFirst + newarray.length - array.length;
@@ -96,7 +96,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if(size == 0){
+        if (size == 0) {
             return null;
         }
         /*there should be a resize*/
@@ -112,7 +112,7 @@ public class ArrayDeque<T> {
 
     public T removeLast() {
         /*there should be a resize*/
-        if(size == 0){
+        if (size == 0) {
             return null;
         }
         if (size < array.length / 3 && array.length >= 16) {
@@ -129,15 +129,15 @@ public class ArrayDeque<T> {
         return array[(nextFirst + index + 1) % array.length];
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> list = new ArrayDeque<>();
-        for(int i = 0 ; i < 50 ;i++){
-            list.addLast(i);
-        }
-        System.out.println();
-        for(int i = 0 ; i < 50 ; i++){
-            list.removeFirst();
-        }
-        System.out.println();
-    }
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> list = new ArrayDeque<>();
+//        for(int i = 0 ; i < 50 ;i++){
+//            list.addLast(i);
+//        }
+//        System.out.println();
+//        for(int i = 0 ; i < 50 ; i++){
+//            list.removeFirst();
+//        }
+//        System.out.println();
+//    }
 }
