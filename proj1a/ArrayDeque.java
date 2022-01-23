@@ -126,6 +126,9 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
+        if(index < 0 || index > size - 1){
+            return null;
+        }
         return array[(nextFirst + index + 1) % array.length];
     }
 
@@ -135,8 +138,8 @@ public class ArrayDeque<T> {
 //            list.addLast(i);
 //        }
 //        System.out.println();
-//        for(int i = 0 ; i < 50 ; i++){
-//            list.removeFirst();
+//        for(int i = 0 ; i < 52 ; i++){
+//            list.removeLast();
 //        }
 //        System.out.println();
 //    }
