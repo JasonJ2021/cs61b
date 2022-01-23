@@ -5,17 +5,17 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -81,15 +81,15 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        IntList ptr1 = A ,ptr2 = B;
-        if(A == null){
+        IntList ptr1 = A, ptr2 = B;
+        if (A == null) {
             return B;
         }
-        while(ptr1.rest != null){
+        while (ptr1.rest != null) {
             ptr1 = ptr1.rest;
         }
-        while(ptr2 != null){
-            ptr1.rest = new IntList(ptr2.first , null);
+        while (ptr2 != null) {
+            ptr1.rest = new IntList(ptr2.first, null);
             ptr1 = ptr1.rest;
             ptr2 = ptr2.rest;
         }
@@ -119,8 +119,8 @@ public class IntList {
                 ptr2 = ptr2.rest;
             }
             return C;
-        }else if (B != null){
-            C = new IntList(B.first , null);
+        } else if (B != null) {
+            C = new IntList(B.first, null);
             IntList ptr1 = C;
             IntList ptr2 = B;
             while (ptr2.rest != null) {
@@ -129,40 +129,27 @@ public class IntList {
                 ptr2 = ptr2.rest;
             }
             return C;
-        }else{
+        } else {
             return null;
         }
 
     }
-    public static IntList reverse(IntList L){
-        if(L == null){
+
+    public static IntList reverse(IntList L) {
+        if (L == null) {
             return null;
         }
         IntList next;
         IntList cur = L;
         IntList pre = null;
-        while(cur != null){
+        while (cur != null) {
+            next = cur.rest;
             cur.rest = pre;
             pre = cur;
-            next= cur.rest;
             cur = next;
         }
-        return L;
+        return pre;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

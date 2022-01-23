@@ -71,7 +71,8 @@ public class IntListTest {
         /*situation 1 : simple */
         IntList A = IntList.of(1,2,3);
         IntList exp = IntList.of(3,2,1);
-        assertEquals(IntList.reverse(A),exp);
+        IntList reverse = IntList.reverse(A);
+        assertEquals(exp , reverse);
         /*situation 2 : test this function is destructive*/
         assertNotEquals(A , IntList.of(1,2,3));
 
