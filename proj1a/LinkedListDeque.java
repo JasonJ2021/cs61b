@@ -1,6 +1,6 @@
 public class LinkedListDeque<T> {
-    int size;
-    ListNode sentinel;
+    private int size;
+    private ListNode sentinel;
     private class ListNode{
         T element;
         ListNode next;
@@ -47,6 +47,9 @@ public class LinkedListDeque<T> {
         System.out.println();
     }
     public T removeFirst(){
+        if(size == 0){
+            return null;
+        }
         ListNode first = sentinel.next;
         sentinel.next = first.next;
         first.next.prev = sentinel;
@@ -54,6 +57,9 @@ public class LinkedListDeque<T> {
         return first.element;
     }
     public T removeLast(){
+        if(size == 0){
+            return null;
+        }
         ListNode last = sentinel.prev;
         sentinel.prev = last.prev;
         last.prev.next = sentinel;
