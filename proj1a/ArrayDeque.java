@@ -34,7 +34,8 @@ public class ArrayDeque<T> {
                 nextLast = array.length;
             } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
-                System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
+                int start = newarray.length - array.length + nextFirst + 1;
+                System.arraycopy(array, nextFirst + 1, newarray, start, array.length - nextFirst - 1);
                 nextFirst = nextFirst + newarray.length - array.length;
             }
 
@@ -49,7 +50,8 @@ public class ArrayDeque<T> {
                 nextLast = size;
             } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
-                System.arraycopy(array, nextFirst + 1, newarray, newarray.length - array.length + nextFirst + 1, array.length - nextFirst - 1);
+                int start = newarray.length - array.length + nextFirst + 1;
+                System.arraycopy(array, nextFirst + 1, newarray, start, array.length - nextFirst - 1);
                 nextFirst = nextFirst + newarray.length - array.length;
             }
 
@@ -118,29 +120,27 @@ public class ArrayDeque<T> {
         if (size < array.length / 3 && array.length >= 16) {
             resize(array.length / 2);
         }
-        T item = array[(nextLast - 1) % array.length];
-        array[(nextLast - 1) % array.length] = null;
-        nextLast = (nextLast - 1) % array.length;
+        T item = array[((nextLast - 1) % array.length + array.length) % array.length];
+        array[((nextLast - 1) % array.length + array.length) % array.length] = null;
+        nextLast = ((nextLast - 1) % array.length + array.length) % array.length;
         size--;
         return item;
     }
 
     public T get(int index) {
-        if(index < 0 || index > size - 1){
+        if (index < 0 || index > size - 1) {
             return null;
         }
         return array[(nextFirst + index + 1) % array.length];
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> list = new ArrayDeque<>();
-//        for(int i = 0 ; i < 50 ;i++){
-//            list.addLast(i);
-//        }
-//        System.out.println();
-//        for(int i = 0 ; i < 52 ; i++){
-//            list.removeLast();
-//        }
-//        System.out.println();
-//    }
+/*    public static void main(String[] args) {
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addFirst(0);
+        list.addFirst(0);
+        list.addFirst(0);
+        int i = list.get(1);
+        list.removeLast();
+        System.out.println(i);
+    }*/
 }
