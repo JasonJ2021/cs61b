@@ -23,9 +23,12 @@ public class ArrayDeque<T> {
 
         if (size == array.length) {
             /*
-             * copy array[0] ~ array[nextLast - 1] to newarray[0]~ newarray[nextLast - 1]
-             * copy array[nextFirst + 1] ~ array[array.lengh - 1] total array.length-nextFirst - 1 blocks to
-             * newarray[newarray.length - 1 - array.length + nextFirst + 1 + 1] ~ newarray[newarray.length - 1]
+             * copy array[0] ~ array[nextLast - 1] to newarray[0]~
+             * newarray[nextLast - 1]
+             * copy array[nextFirst + 1] ~ array[array.lengh - 1]
+             * total array.length-nextFirst - 1 blocks to
+             * newarray[newarray.length - 1 - array.length + nextFirst + 1 + 1] ~
+             * newarray[newarray.length - 1]
              * for example :
              * */
             if (nextLast == 0) {
@@ -35,7 +38,8 @@ public class ArrayDeque<T> {
             } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
                 int start = newarray.length - array.length + nextFirst + 1;
-                System.arraycopy(array, nextFirst + 1, newarray, start, array.length - nextFirst - 1);
+                int total = array.length - nextFirst - 1;
+                System.arraycopy(array, nextFirst + 1, newarray, start, total);
                 nextFirst = nextFirst + newarray.length - array.length;
             }
 
@@ -51,7 +55,8 @@ public class ArrayDeque<T> {
             } else {
                 System.arraycopy(array, 0, newarray, 0, nextLast);
                 int start = newarray.length - array.length + nextFirst + 1;
-                System.arraycopy(array, nextFirst + 1, newarray, start, array.length - nextFirst - 1);
+                int total = array.length - nextFirst - 1;
+                System.arraycopy(array, nextFirst + 1, newarray, start, total);
                 nextFirst = nextFirst + newarray.length - array.length;
             }
 
@@ -65,7 +70,7 @@ public class ArrayDeque<T> {
             resize(2 * array.length);
         }
         array[nextFirst] = item;
-        nextFirst = (nextFirst - 1) % array.length;
+        nextFirst = ((nextFirst - 1) % array.length + array.length) % array.length;
         size++;
     }
 
