@@ -20,7 +20,7 @@ public class TestPalindrome {
 
     @Test
     public void testPalindrome1() {
-        String a = "a";
+        String a = "aba";
         assertTrue(palindrome.isPalindrome(a));
     }
 
@@ -50,19 +50,19 @@ public class TestPalindrome {
 
     @Test
     public void testPalindrome6() {
-        String a = "cat";
+        String a = "cac";
         assertFalse(palindrome.isPalindrome(a, offByOne));
     }
 
     @Test
     public void testPalindrome7() {
-        String a = "noon";
+        String a = "acdb";
         assertTrue(palindrome.isPalindrome(a, offByOne));
     }
 
     @Test
     public void testPalindrome8() {
-        String a = "racecar";
+        String a = "fhig";
         assertTrue(palindrome.isPalindrome(a, offByOne));
     }
 }
