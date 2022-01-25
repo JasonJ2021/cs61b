@@ -19,7 +19,7 @@ public class TestArrayDequeGold {
         StudentArrayDeque<Integer> stu = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> sol = new ArrayDequeSolution<>();
 
-        ArrayDequeSolution<Integer> operations = new ArrayDequeSolution<>();
+
         int i = 0;
         String message = "";
         while (true) {
@@ -31,19 +31,19 @@ public class TestArrayDequeGold {
                 message = message + "addFirst(" + i + ")\n";
             } else if (random < 2) {
                 stu.addLast(i);
-                stu.addLast(i);
+                sol.addLast(i);
                 message = message + "addLast(" + i + ")\n";
             } else if (random < 3) {
                 if (!stu.isEmpty() && !sol.isEmpty()) {
-                    int a = stu.removeFirst();
-                    int b = sol.removeFirst();
+                    Integer a = stu.removeFirst();
+                    Integer b = sol.removeFirst();
                     message = message + "removeFirst()\n";
                     assertEquals(message, a, b);
                 }
             } else {
                 if (!stu.isEmpty() && !sol.isEmpty()) {
-                    int a = stu.removeLast();
-                    int b = sol.removeLast();
+                    Integer a = stu.removeLast();
+                    Integer b = sol.removeLast();
                     message = message + "removeLast()\n";
                     assertEquals(message, a, b);
                 }
