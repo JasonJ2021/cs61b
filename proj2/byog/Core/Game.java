@@ -9,8 +9,8 @@ import java.util.Random;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int WIDTH = 81;
+    public static final int HEIGHT = 31;
     public static final long SEED = 2873123;
     public static final Random RANDOM = new Random(SEED);
 
@@ -42,12 +42,11 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
 
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
-                finalWorldFrame[x][y] = Tileset.NOTHING;
-            }
-        }
+        Maze.gridGenerator(finalWorldFrame);
         Room.fillRoomArray(finalWorldFrame);
+        Maze.mazeGenerator(finalWorldFrame);
+        Room.connectRoom(finalWorldFrame);
+        Room.transRoom(finalWorldFrame);
         return finalWorldFrame;
     }
 }
