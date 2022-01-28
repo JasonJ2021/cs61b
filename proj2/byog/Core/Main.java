@@ -15,7 +15,7 @@ public class Main {
             Game game = new Game();
             TETile[][] worldState = game.playWithInputString(args[0]);
 
-            game.ter.renderFrame(worldState);
+//            game.ter.renderFrame(worldState);
             System.out.println(TETile.toString(worldState));
 
         } else {

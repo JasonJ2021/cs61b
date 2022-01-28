@@ -22,7 +22,7 @@ public class Game {
 
     public Game(){
 
-        ter.initialize(WIDTH, HEIGHT);
+//        ter.initialize(WIDTH, HEIGHT);
     }
 
     /**
