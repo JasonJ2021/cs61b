@@ -46,7 +46,7 @@ public class Game {
                 seed = seed + input.charAt(i);
             }
         }
-        int Seed = Integer.parseInt(seed);
+        long Seed = Long.parseLong(seed);
         RANDOM = new Random(Seed);
 
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
