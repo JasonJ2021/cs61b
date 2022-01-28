@@ -40,7 +40,12 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        String seed = input.substring(1,input.length() - 1);
+        String seed = "" ;
+        for(int i = 0 ; i < input.length() ; i++){
+            if(input.charAt(i)<='9' && input.charAt(i) >='0'){
+                seed = seed + input.charAt(i);
+            }
+        }
         int Seed = Integer.parseInt(seed);
         RANDOM = new Random(Seed);
 
