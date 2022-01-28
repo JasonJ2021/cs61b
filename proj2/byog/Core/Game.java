@@ -12,7 +12,8 @@ public class Game {
     public static final int WIDTH = 81;
     public static final int HEIGHT = 31;
     public static  Random RANDOM;
-
+    public static long Seed;
+    public static TETile[][] world;
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
@@ -21,7 +22,7 @@ public class Game {
 
     public Game(){
 
-//        ter.initialize(WIDTH, HEIGHT);
+        ter.initialize(WIDTH, HEIGHT);
     }
 
     /**
@@ -46,10 +47,15 @@ public class Game {
                 seed = seed + input.charAt(i);
             }
         }
-        long Seed = Long.parseLong(seed);
+        if(Seed == Long.parseLong(seed)){
+            return world;
+        }
+        Seed = Long.parseLong(seed);
         RANDOM = new Random(Seed);
 
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
+        world = finalWorldFrame;
+
         Maze.gridGenerator(finalWorldFrame);
         Room.fillRoomArray(finalWorldFrame);
         Maze.mazeGenerator(finalWorldFrame);
