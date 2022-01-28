@@ -1,12 +1,43 @@
 // TODO: Make sure to make this class a part of the synthesizer package
-// package <package name>;
+package synthesizer;
+
+
 import java.util.Iterator;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T>  {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayRingIterator();
+    }
+
+    private class ArrayRingIterator implements Iterator<T>{
+        private int position;
+        private int count ;
+        public ArrayRingIterator(){
+            count = 0 ;
+            position = first;
+        }
+        @Override
+        public boolean hasNext() {
+            if(count < fillCount){
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public T next() {
+            T item = rb[position];
+            position = (position+1) % capacity;
+            count++;
+            return item;
+        }
+    }
     /* Index for the next enqueue. */
     private int last;
     /* Array for storing the buffer data. */
@@ -21,6 +52,11 @@ public class ArrayRingBuffer<T>  {
         //       this.capacity should be set appropriately. Note that the local variable
         //       here shadows the field we inherit from AbstractBoundedQueue, so
         //       you'll need to use this.capacity to set the capacity.
+        rb = (T[]) new Object[capacity];
+        first = 0;
+        last = 0;
+        fillCount = 0;
+        this.capacity = capacity;
     }
 
     /**
@@ -30,6 +66,12 @@ public class ArrayRingBuffer<T>  {
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
+        if(fillCount == capacity){
+            throw new RuntimeException("Ring Buffer Overflow");
+        }
+        rb[last] = x;
+        fillCount++;
+        last = (last + 1)%capacity;
     }
 
     /**
@@ -38,7 +80,14 @@ public class ArrayRingBuffer<T>  {
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update 
+        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update first
+        if(fillCount == 0){
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
+        T item = rb[first];
+        fillCount--;
+        first = (first + 1)%capacity;
+        return item;
     }
 
     /**
@@ -46,7 +95,9 @@ public class ArrayRingBuffer<T>  {
      */
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
+        return rb[first];
     }
 
     // TODO: When you get to part 5, implement the needed code to support iteration.
+
 }
