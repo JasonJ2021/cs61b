@@ -1,5 +1,6 @@
 package byog.Core;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /*
@@ -7,7 +8,7 @@ import java.util.Random;
       public static final int HEIGHT = 30;
     *
     * */
-public class Position {
+public class Position implements Serializable {
     public int x , y;
 
 
