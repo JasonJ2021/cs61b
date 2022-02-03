@@ -19,6 +19,7 @@ public class Game {
     public static TETile[][] world;
     private static World savedWorld;
     private static Position PlayerPosition;
+
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
@@ -175,6 +176,8 @@ public class Game {
 
         int xPos = PlayerPosition.x;
         int yPos = PlayerPosition.y;
+        System.out.println(xPos);
+        System.out.println(yPos);
 
         int mxxPos;
         int myyPos;
@@ -195,26 +198,28 @@ public class Game {
                 continue;
             }
             char key = StdDraw.nextKeyTyped();
+
             if (key == 'w') {
-                if (world[xPos][yPos + 1] == Tileset.FLOOR) {
+                System.out.println(getTileName(xPos, yPos));
+                if (world[xPos][yPos + 1].equals(Tileset.FLOOR)) {
                     world[xPos][yPos] = Tileset.FLOOR;
                     world[xPos][yPos + 1] = Tileset.PLAYER;
                     yPos++;
                 }
             } else if (key == 's') {
-                if (world[xPos][yPos - 1] == Tileset.FLOOR) {
+                if (world[xPos][yPos - 1].equals(Tileset.FLOOR)) {
                     world[xPos][yPos] = Tileset.FLOOR;
                     world[xPos][yPos - 1] = Tileset.PLAYER;
                     yPos--;
                 }
             } else if (key == 'a') {
-                if (world[xPos - 1][yPos] == Tileset.FLOOR) {
+                if (world[xPos - 1][yPos].equals(Tileset.FLOOR)) {
                     world[xPos][yPos] = Tileset.FLOOR;
                     world[xPos - 1][yPos] = Tileset.PLAYER;
                     xPos--;
                 }
             } else if (key == 'd') {
-                if (world[xPos + 1][yPos] == Tileset.FLOOR) {
+                if (world[xPos + 1][yPos].equals(Tileset.FLOOR)) {
                     world[xPos][yPos] = Tileset.FLOOR;
                     world[xPos + 1][yPos] = Tileset.PLAYER;
                     xPos++;
@@ -233,7 +238,7 @@ public class Game {
                     }
                 }
             }
-            PlayerPosition = new Position(xPos , yPos);
+            PlayerPosition = new Position(xPos, yPos);
             ter.renderFrame(world);
             drawBottomInfo(s);
         }
