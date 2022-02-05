@@ -26,7 +26,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Node root;  /* Root node of the tree. */
     private int size; /* The number of key-value pairs in the tree */
-
+    private Node delete;
+    private boolean deleteFlash = false;
     /* Creates an empty BSTMap. */
     public BSTMap() {
         this.clear();
@@ -155,6 +156,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }else if(cmp > 0){
             x.right = removeHelper(x.right , key);
         }else {
+            size--;
+            delete = x;
+            deleteFlash = true;
             if(x == root){
                 x = removeNode(x);
                 root = x;
@@ -166,11 +170,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
     @Override
     public V remove(K key) {
-        Node x = removeHelper(root,key);
-        if(x == null){
+        removeHelper(root,key);
+        if(!deleteFlash ){
             return null;
         }
-        return x.value;
+        deleteFlash = false;
+        return delete.value;
     }
 
     /**
@@ -186,6 +191,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }else if(cmp > 0){
             x.right = removeHelper(x.right , key);
         }else if(x.value.equals(value)){
+            size--;
+            delete = x;
+            deleteFlash = true;
             if(x == root){
                 x = removeNode(x);
                 root = x;
@@ -197,11 +205,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
     @Override
     public V remove(K key, V value) {
-        Node x = removeHelper(root,key ,value );
-        if(x == null){
+        removeHelper(root,key ,value );
+        if(!deleteFlash ){
             return null;
         }
-        return x.value;
+        deleteFlash = false;
+        return delete.value;
     }
 
 
