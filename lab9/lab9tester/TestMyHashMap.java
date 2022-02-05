@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import lab9.MyHashMap;
 
+import java.util.Set;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -126,7 +128,18 @@ public class TestMyHashMap {
         assertEquals(345, studentIDs.get("evil alan").intValue());
         assertEquals(studentIDs.get("evil alan"), studentIDs.get("alan"));
     }
-
+    @Test
+    public void keySetTest() {
+        MyHashMap<String, Integer> b = new MyHashMap<String, Integer>();
+        b.put("a", 1);
+        b.put("b", 1);
+        b.put("c", 1);
+        b.put("di", 1);
+        b.put("ei", 1);
+        b.put("fi", 1);
+        Set<String> strings = b.keySet();
+        System.out.println(strings);
+    }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
     }
