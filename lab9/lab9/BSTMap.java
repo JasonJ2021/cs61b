@@ -28,6 +28,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private int size; /* The number of key-value pairs in the tree */
     private Node delete;
     private boolean deleteFlash = false;
+
     /* Creates an empty BSTMap. */
     public BSTMap() {
         this.clear();
@@ -102,17 +103,18 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
-    private void preOrder(Node x , Set<K> keyset){
-        if(x == null)return;
+    private void preOrder(Node x, Set<K> keyset) {
+        if (x == null) return;
         keyset.add(x.key);
-        preOrder(x.left,keyset);
-        preOrder(x.right,keyset);
+        preOrder(x.left, keyset);
+        preOrder(x.right, keyset);
     }
+
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
         Set<K> set = new HashSet<>();
-        preOrder(root,set);
+        preOrder(root, set);
         return set;
     }
 
@@ -121,57 +123,60 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      * returns VALUE removed,
      * null on failed removal.
      */
-    private Node fetchRight(Node  x){
+    private Node fetchRight(Node x) {
         Node temp = x;
         Node parent = x;
-        while(temp.right != null){
+        while (temp.right != null) {
             parent = temp;
             temp = temp.right;
         }
         parent.right = null;
         return temp;
     }
-    private Node removeNode(Node x){
-        if(x.left == null && x.right == null){
+
+    private Node removeNode(Node x) {
+        if (x.left == null && x.right == null) {
             return null;
         }
-        if(x.left == null && x.right != null){
+        if (x.left == null && x.right != null) {
             return x.right;
         }
-        if(x.left != null && x.right == null){
+        if (x.left != null && x.right == null) {
             return x.left;
         }
         Node leftRightest = fetchRight(x.left);
         leftRightest.right = x.right;
-        if(leftRightest != x.left){
+        if (leftRightest != x.left) {
             leftRightest.left = x.left;
         }
         return leftRightest;
     }
-    private Node removeHelper(Node x , K key){
-        if(x == null)return null;
+
+    private Node removeHelper(Node x, K key) {
+        if (x == null) return null;
         int cmp = key.compareTo(x.key);
-        if(cmp < 0){
+        if (cmp < 0) {
             x.left = removeHelper(x.left, key);
-        }else if(cmp > 0){
-            x.right = removeHelper(x.right , key);
-        }else {
+        } else if (cmp > 0) {
+            x.right = removeHelper(x.right, key);
+        } else {
             size--;
             delete = x;
             deleteFlash = true;
-            if(x == root){
+            if (x == root) {
                 x = removeNode(x);
                 root = x;
-            }else{
+            } else {
                 x = removeNode(x);
             }
         }
         return x;
     }
+
     @Override
     public V remove(K key) {
-        removeHelper(root,key);
-        if(!deleteFlash ){
+        removeHelper(root, key);
+        if (!deleteFlash) {
             return null;
         }
         deleteFlash = false;
@@ -183,30 +188,31 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      * currently mapped to the specified value.  Returns the VALUE removed,
      * null on failed removal.
      **/
-    private Node removeHelper(Node x , K key , V value ){
-        if(x == null)return null;
+    private Node removeHelper(Node x, K key, V value) {
+        if (x == null) return null;
         int cmp = key.compareTo(x.key);
-        if(cmp < 0){
+        if (cmp < 0) {
             x.left = removeHelper(x.left, key);
-        }else if(cmp > 0){
-            x.right = removeHelper(x.right , key);
-        }else if(x.value.equals(value)){
+        } else if (cmp > 0) {
+            x.right = removeHelper(x.right, key);
+        } else if (x.value.equals(value)) {
             size--;
             delete = x;
             deleteFlash = true;
-            if(x == root){
+            if (x == root) {
                 x = removeNode(x);
                 root = x;
-            }else{
+            } else {
                 x = removeNode(x);
             }
         }
         return x;
     }
+
     @Override
     public V remove(K key, V value) {
-        removeHelper(root,key ,value );
-        if(!deleteFlash ){
+        removeHelper(root, key, value);
+        if (!deleteFlash) {
             return null;
         }
         deleteFlash = false;
@@ -214,19 +220,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
 
-    private List<K> keyList(){
+    private List<K> keyList() {
         List<K> list = new ArrayList<>();
-        preOrder(root,list);
+        preOrder(root, list);
         return list;
     }
 
 
-    private void preOrder(Node x , List<K> keylist){
-        if(x == null)return;
+    private void preOrder(Node x, List<K> keylist) {
+        if (x == null) return;
         keylist.add(x.key);
-        preOrder(x.left,keylist);
-        preOrder(x.right,keylist);
+        preOrder(x.left, keylist);
+        preOrder(x.right, keylist);
     }
+
     @Override
     public Iterator<K> iterator() {
         return keyList().iterator();
