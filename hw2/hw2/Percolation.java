@@ -17,7 +17,7 @@ public class Percolation {
         size = 0;
         grid = new boolean[N][N];
         uf = new WeightedQuickUnionUF(N * N + 2);
-        top = N*N ;
+        top = N * N;
         bottom = N * N + 1;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -67,7 +67,7 @@ public class Percolation {
             uf.union(top, xyToUfIndex(row, col));
         }
         if (row == N - 1) {
-            if(uf.connected(top,xyToUfIndex(row,col))){
+            if (uf.connected(top, xyToUfIndex(row, col))) {
                 uf.union(bottom, xyToUfIndex(row, col));
             }
 //            uf.union(bottom, xyToUfIndex(row, col));
@@ -90,12 +90,12 @@ public class Percolation {
     }
 
     // does the system percolate?
-    public boolean percolates(){
-        return uf.connected(bottom , top);
+    public boolean percolates() {
+        return uf.connected(bottom, top);
     }
 
     // use for unit testing (not required)
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
     }
 
