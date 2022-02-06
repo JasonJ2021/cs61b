@@ -11,7 +11,6 @@ public class PercolationStats {
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) throw new IllegalArgumentException("Requirement: N > 0 && T >0");
         Percolation perco;
-        perco = pf.make(N);
         x = new double[T];
         this.T = T;
         for (int i = 0; i < T; i++) {
