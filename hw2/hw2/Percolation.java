@@ -39,12 +39,6 @@ public class Percolation {
         if (isOpen(row, col)) return;
         size++;
         grid[row][col] = true;
-        if (row == 0) {
-            uf.union(top, xyToUfIndex(row, col));
-        }
-        if (row == N - 1) {
-            uf.union(bottom, xyToUfIndex(row, col));
-        }
         //look up
         if (row > 0) {
             if (isOpen(row - 1, col)) {
@@ -68,6 +62,15 @@ public class Percolation {
             if (isOpen(row, col + 1)) {
                 uf.union(xyToUfIndex(row, col), xyToUfIndex(row, col + 1));
             }
+        }
+        if (row == 0) {
+            uf.union(top, xyToUfIndex(row, col));
+        }
+        if (row == N - 1) {
+            if(uf.connected(top,xyToUfIndex(row,col))){
+                uf.union(bottom, xyToUfIndex(row, col));
+            }
+//            uf.union(bottom, xyToUfIndex(row, col));
         }
     }
 
