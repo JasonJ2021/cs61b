@@ -66,12 +66,12 @@ public class Percolation {
         if (row == 0) {
             uf.union(top, xyToUfIndex(row, col));
         }
-        if (row == N - 1) {
+/*        if (row == N - 1) {
             if (uf.connected(top, xyToUfIndex(row, col))) {
                 uf.union(bottom, xyToUfIndex(row, col));
             }
-//            uf.union(bottom, xyToUfIndex(row, col));
-        }
+            uf.union(bottom, xyToUfIndex(row, col));
+        }*/
     }
 
     // is the site (row, col) open?
@@ -91,6 +91,11 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
+        for(int j = 0 ; j < N ;j++){
+            if (uf.connected(top, xyToUfIndex(N -1, j))) {
+                uf.union(bottom, xyToUfIndex(N - 1, j));
+            }
+        }
         return uf.connected(bottom, top);
     }
 
