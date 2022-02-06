@@ -11,6 +11,8 @@ public class Percolation {
     private int N;
     private int size;
 
+    private WeightedQuickUnionUF fakeUf;
+
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
         if (N <= 0) {
@@ -20,6 +22,7 @@ public class Percolation {
         size = 0;
         grid = new boolean[N][N];
         uf = new WeightedQuickUnionUF(N * N + 2);
+        fakeUf = new WeightedQuickUnionUF(N * N + 1);
         top = N * N;
         bottom = N * N + 1;
         for (int i = 0; i < N; i++) {
@@ -48,32 +51,40 @@ public class Percolation {
         if (row > 0) {
             if (isOpen(row - 1, col)) {
                 uf.union(xyToUfIndex(row, col), xyToUfIndex(row - 1, col));
+                fakeUf.union(xyToUfIndex(row, col), xyToUfIndex(row - 1, col));
             }
         }
         //look down
         if (row < N - 1) {
             if (isOpen(row + 1, col)) {
                 uf.union(xyToUfIndex(row, col), xyToUfIndex(row + 1, col));
+                fakeUf.union(xyToUfIndex(row, col), xyToUfIndex(row + 1, col));
             }
         }
         //look left
         if (col > 0) {
             if (isOpen(row, col - 1)) {
                 uf.union(xyToUfIndex(row, col), xyToUfIndex(row, col - 1));
+                fakeUf.union(xyToUfIndex(row, col), xyToUfIndex(row, col - 1));
             }
         }
         //look right
         if (col < N - 1) {
             if (isOpen(row, col + 1)) {
                 uf.union(xyToUfIndex(row, col), xyToUfIndex(row, col + 1));
+                fakeUf.union(xyToUfIndex(row, col), xyToUfIndex(row, col + 1));
             }
         }
         if (row == 0) {
             uf.union(top, xyToUfIndex(row, col));
+            fakeUf.union(top, xyToUfIndex(row, col));
         }
-        if (isOpen(N - 1, col) && uf.connected(top, xyToUfIndex(N - 1, col))) {
-            uf.union(bottom, xyToUfIndex(N - 1, col));
+        if (row == N - 1) {
+            uf.union(bottom, xyToUfIndex(row, col));
         }
+//        if (isOpen(N - 1, col) && uf.connected(top, xyToUfIndex(N - 1, col))) {
+//            uf.union(bottom, xyToUfIndex(N - 1, col));
+//        }
 
 
 /*        if (row == N - 1) {
@@ -91,7 +102,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return uf.connected(xyToUfIndex(row, col), top);
+        return fakeUf.connected(xyToUfIndex(row, col), top);
     }
 
     // number of open sites
