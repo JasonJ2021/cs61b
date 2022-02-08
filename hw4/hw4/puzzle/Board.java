@@ -8,11 +8,12 @@ public class Board implements WorldState {
     private int[][] tile;
     private final int BLANK = 0;
     private int N;
-    public Board(int[][] tiles){
+
+    public Board(int[][] tiles) {
         this.N = tiles.length;
         this.tile = new int[N][N];
-        for(int i = 0 ; i < N ; i++){
-            for(int j = 0 ; j < N ; j++){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 this.tile[i][j] = tiles[i][j];
             }
         }
@@ -20,13 +21,13 @@ public class Board implements WorldState {
 
 
     /*Returns value of tile at row i, column j (or 0 if blank)*/
-    public int tileAt(int i, int j){
+    public int tileAt(int i, int j) {
         return this.tile[i][j];
     }
 
 
     /*Returns the board size N*/
-    public int size(){
+    public int size() {
         return N;
     }
 
@@ -72,42 +73,43 @@ public class Board implements WorldState {
         return neighbors;
     }
 
-    private int xyToIndex(int row , int col){
-        return 1 + row*N + col;
+    private int xyToIndex(int row, int col) {
+        return 1 + row * N + col;
     }
+
     /*Hamming estimate described below*/
-    public int hamming(){
+    public int hamming() {
         int ham = 0;
-        for(int i = 0 ; i < N ; i++){
-            for(int j = 0 ; j < N ; j++){
-                if(tileAt(i,j) == BLANK){
-                    if(xyToIndex(i , j)!= N * N){
-                        ham++;
-                    }
-                }else if(tileAt(i , j) != xyToIndex(i , j)){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (tileAt(i, j) == BLANK) {
+                    continue;
+                } else if (tileAt(i, j) != xyToIndex(i, j)) {
                     ham++;
                 }
             }
         }
         return ham;
     }
-    private int actualRow(int index){
+
+    private int actualRow(int index) {
         return (index - 1) / N;
     }
-    private int actualCol(int index){
-        return (index - 1 )%N;
+
+    private int actualCol(int index) {
+        return (index - 1) % N;
     }
+
     /*Manhattan estimate described below*/
-    public int manhattan(){
+    public int manhattan() {
         int manhat = 0;
-        for(int i = 0 ; i < N ; i++){
-            for(int j = 0 ; j < N ; j++){
-                if(tileAt(i,j) == BLANK){
-                    manhat+= N - i - 1;
-                    manhat+= N - j - 1;
-                }else{
-                    manhat+= Math.abs(i - actualRow(tileAt(i,j)));
-                    manhat+= Math.abs(j - actualCol(tileAt(i,j)));
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (tileAt(i, j) == BLANK) {
+                    continue;
+                } else {
+                    manhat += Math.abs(i - actualRow(tileAt(i, j)));
+                    manhat += Math.abs(j - actualCol(tileAt(i, j)));
                 }
             }
         }
@@ -118,12 +120,13 @@ public class Board implements WorldState {
     /*Estimated distance to goal. This method should
     simply return the results of manhattan() when submitted to
     Gradescope.*/
-    public int estimatedDistanceToGoal(){
+    public int estimatedDistanceToGoal() {
         return manhattan();
     }
+
     /*Returns true if this board's tile values are the same
               position as y's*/
-    public boolean equals(Object y){
+    public boolean equals(Object y) {
         if (this == y) {
             return true;
         }
@@ -131,12 +134,12 @@ public class Board implements WorldState {
             return false;
         }
         Board that = (Board) y;
-        if(this.N != that.N){
+        if (this.N != that.N) {
             return false;
         }
-        for(int i = 0 ; i < N ; i++){
-            for(int j = 0 ; j < N ; j++){
-                if(this.tileAt(i,j) != that.tileAt(i,j)){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (this.tileAt(i, j) != that.tileAt(i, j)) {
                     return false;
                 }
             }
@@ -144,15 +147,17 @@ public class Board implements WorldState {
         return true;
     }
 
-    /** Returns the string representation of the board. 
-      * Uncomment this method. */
+    /**
+     * Returns the string representation of the board.
+     * Uncomment this method.
+     */
     public String toString() {
         StringBuilder s = new StringBuilder();
         int N = size();
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
@@ -160,4 +165,10 @@ public class Board implements WorldState {
         return s.toString();
     }
 
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = tile.hashCode();
+        return result;
+    }
 }

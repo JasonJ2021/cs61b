@@ -5,6 +5,7 @@ public class Node {
     public int moves;
     public Node prev;
     private int estimatedDistanceToGoal;
+
     public Node(WorldState worldState, int moves, Node prev) {
         this.worldState = worldState;
         this.moves = moves;

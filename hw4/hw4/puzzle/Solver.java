@@ -7,8 +7,8 @@ import java.util.Comparator;
 
 
 public class Solver {
-    MinPQ<Node> minPQ;
-    Node goal;
+    private MinPQ<Node> minPQ;
+    private Node goal;
 
     public Solver(WorldState initial) {
         minPQ = new MinPQ<>(new Comparator<Node>() {
@@ -25,11 +25,11 @@ public class Solver {
                 break;
             }
             for (WorldState worldState : x.worldState.neighbors()) {
-                if(x.prev != null){
+                if (x.prev != null) {
                     if (!worldState.equals(x.prev.worldState)) {
                         minPQ.insert(new Node(worldState, x.moves + 1, x));
                     }
-                }else{
+                } else {
                     minPQ.insert(new Node(worldState, x.moves + 1, x));
                 }
             }
