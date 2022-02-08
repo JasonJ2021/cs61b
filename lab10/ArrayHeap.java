@@ -125,8 +125,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         int rightIndex = rightIndex(index);
         /** TODO: Your code here. */
         while (min(index, leftIndex) != index || min(index, rightIndex) != index) {
-            int temp = min(leftIndex , rightIndex);
-            swap(temp , index);
+            int temp = min(leftIndex, rightIndex);
+            swap(temp, index);
             index = temp;
             leftIndex = leftIndex(index);
             rightIndex = rightIndex(index);
@@ -145,8 +145,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             resize(contents.length * 2);
         }
         /* TODO: Your code here! */
-        contents[size+1] = new Node(item ,priority);
-        int index = size+1;
+        contents[size + 1] = new Node(item, priority);
+        int index = size + 1;
         size++;
         swim(index);
     }
@@ -175,7 +175,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         /* TODO: Your code here! */
         T minItem = contents[1].myItem;
         contents[1] = null;
-        swap(1,size);
+        swap(1, size);
         size--;
         sink(1);
         return minItem;
@@ -202,17 +202,17 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
         int i;
-        for(i = 1 ; i < contents.length ;i++){
-            if(contents[i].myItem.equals(item)){
-                   break;
+        for (i = 1; i < contents.length; i++) {
+            if (contents[i].myItem.equals(item)) {
+                break;
             }
         }
         double oldPriority = contents[i].myPriority;
-        if(oldPriority < priority){
-            contents[i] = new Node(item , priority);
+        if (oldPriority < priority) {
+            contents[i] = new Node(item, priority);
             sink(i);
-        }else{
-            contents[i] = new Node(item , priority);
+        } else {
+            contents[i] = new Node(item, priority);
             swim(i);
         }
         return;
