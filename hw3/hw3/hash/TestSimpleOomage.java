@@ -2,6 +2,7 @@ package hw3.hash;
 
 import edu.princeton.cs.algs4.In;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,13 +32,13 @@ public class TestSimpleOomage {
           hashCode UNLESS they have the same red, blue, and green values!
          */
         Set<Integer> set = new HashSet<>();
-        for(int i = 0 ; i <=255 ; i+=5 ){
-            for(int j = 0 ; j <=255 ; j+=5){
-                for(int k = 0 ; k <=255 ; k+=5){
+        for (int i = 0; i <= 255; i += 5) {
+            for (int j = 0; j <= 255; j += 5) {
+                for (int k = 0; k <= 255; k += 5) {
                     int oldsize = set.size();
-                    set.add(new SimpleOomage(i,j,k).hashCode());
+                    set.add(new SimpleOomage(i, j, k).hashCode());
                     int newsize = set.size();
-                    assertNotEquals(oldsize,newsize);
+                    assertNotEquals(oldsize, newsize);
                 }
             }
         }
@@ -76,7 +77,9 @@ public class TestSimpleOomage {
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(oomages, 10));
     }
 
-    /** Calls tests for SimpleOomage. */
+    /**
+     * Calls tests for SimpleOomage.
+     */
     public static void main(String[] args) {
         jh61b.junit.textui.runClasses(TestSimpleOomage.class);
     }
