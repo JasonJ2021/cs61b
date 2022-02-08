@@ -145,10 +145,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             resize(contents.length * 2);
         }
         /* TODO: Your code here! */
-        contents[size + 1] = new Node(item, priority);
-        int index = size + 1;
-        size++;
-        swim(index);
+        contents[++size] = new Node(item, priority);
+        swim(size);
     }
 
     /**
@@ -173,6 +171,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         /* TODO: Your code here! */
+        if(size == 0){
+            throw new IllegalArgumentException("Heap is empty");
+        }
         T minItem = contents[1].myItem;
         contents[1] = null;
         swap(1, size);
