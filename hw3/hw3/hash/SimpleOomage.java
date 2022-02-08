@@ -1,5 +1,7 @@
 package hw3.hash;
+
 import java.awt.Color;
+
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -15,11 +17,11 @@ public class SimpleOomage implements Oomage {
     @Override
     public boolean equals(Object o) {
         // TODO: Write this method.
-        if(this == o)return true;
-        if(o == null)return false;
-        if(o.getClass() != this.getClass())return false;
+        if (this == o) return true;
+        if (o == null) return false;
+        if (o.getClass() != this.getClass()) return false;
         SimpleOomage that = (SimpleOomage) o;
-        return (this.red == that.red) && (this.green == that.green) &&(this.blue == that.blue) ;
+        return (this.red == that.red) && (this.green == that.green) && (this.blue == that.blue);
     }
 
 
@@ -29,7 +31,11 @@ public class SimpleOomage implements Oomage {
             return red + green + blue;
         } else {
             // TODO: Write a perfect hash function for Simple Oomages.
-            return red*256*256 + green*256+ blue;
+            int newred = red / 5;
+            int newgreen = green / 5;
+            int newblue = blue / 5;
+
+            return red * 256 * 256 + green * 256 + blue;
         }
     }
 
