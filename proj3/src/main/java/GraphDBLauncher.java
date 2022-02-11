@@ -18,6 +18,7 @@ public class GraphDBLauncher {
         List<Long> vertices = new ArrayList<Long>();
         for (long v : verticesIterable) {
             vertices.add(v);
+            System.out.println(g.getNode(v));
         }
 
         System.out.println("There are " + vertices.size() + " vertices in the graph.");

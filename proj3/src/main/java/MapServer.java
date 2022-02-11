@@ -324,7 +324,6 @@ public class MapServer {
         }
         return true;
     }
-
     /**
      * Takes the route of this MapServer and converts it into an HTML friendly
      * String to be passed to the frontend.

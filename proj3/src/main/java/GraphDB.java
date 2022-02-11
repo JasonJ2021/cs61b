@@ -64,8 +64,8 @@ public class GraphDB {
      * we can reasonably assume this since typically roads are connected.
      */
     private void clean() {
-        for(long v : vertices()){
-            if(graph.get(v).adj.size() == 0){
+        for (long v : vertices()) {
+            if (graph.get(v).adj.size() == 0) {
                 graph.remove(v);
             }
         }
@@ -79,7 +79,7 @@ public class GraphDB {
     Iterable<Long> vertices() {
         //YOUR CODE HERE, this currently returns only an empty list.
         ArrayList<Long> arrayList = new ArrayList<>();
-        for(Long v : graph.keySet()){
+        for (Long v : graph.keySet()) {
             arrayList.add(v);
         }
         return arrayList;
@@ -158,9 +158,9 @@ public class GraphDB {
     long closest(double lon, double lat) {
         double min = Double.POSITIVE_INFINITY;
         long minIndex = -1;
-        for(long v : vertices()){
-            double distanceTo = distance(lon,lat,lon(v) , lat(v));
-            if(distanceTo < min){
+        for (long v : vertices()) {
+            double distanceTo = distance(lon, lat, lon(v), lat(v));
+            if (distanceTo < min) {
                 minIndex = v;
                 min = distanceTo;
             }
@@ -194,6 +194,7 @@ public class GraphDB {
         double lon;
         ArrayList<Long> adj;
         String name;
+        String wayName;
 
         Node(long id, double lat, double lon) {
             this.id = id;
@@ -205,7 +206,8 @@ public class GraphDB {
         void setName(String s) {
             name = s;
         }
-        private void addConnection(long v){
+
+        private void addConnection(long v) {
             adj.add(v);
         }
 
@@ -215,15 +217,25 @@ public class GraphDB {
                     "id=" + id +
                     ", lat=" + lat +
                     ", lon=" + lon +
+                    ", wayName='" + wayName + '\'' +
                     '}';
         }
     }
 
-    public void addEdge(long v , long w){
+    public String getWayName(long v) {
+        return graph.get(v).wayName;
+    }
+
+    public void setWayName(long v, String name) {
+        graph.get(v).wayName = name;
+    }
+
+    public void addEdge(long v, long w) {
         graph.get(v).addConnection(w);
         graph.get(w).addConnection(v);
     }
-    public Node getNode(long v){
+
+    public Node getNode(long v) {
         return graph.get(v);
     }
 }
