@@ -66,6 +66,9 @@ public class Router {
         Deque<Long> deque = new ArrayDeque<>();
         long temp = end;
         while (temp != start) {
+            if (edgeTo.get(temp) == null) {
+                return new ArrayList<>();
+            }
             deque.addFirst(temp);
             temp = edgeTo.get(temp);
         }
@@ -110,16 +113,16 @@ public class Router {
         String toName = "";
 //        Start on Shattuck Avenue for 0.5 miles.
         while (routeIterator.hasNext()) {
-            if(g.getWayName(from) != null){
+            if (g.getWayName(from) != null) {
                 fromName = g.getWayName(from);
             }
-            if(g.getWayName(to) != null){
+            if (g.getWayName(to) != null) {
                 toName = g.getWayName(to);
             }
             if (!fromName.equals(toName)) {
                 if (flag) {
                     direction = getDirection(g, from, to);
-                }else{
+                } else {
                     flag = true;
                 }
 
