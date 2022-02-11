@@ -1,7 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -76,6 +78,8 @@ public class TestGraphBuildingTiny {
     public void testClosest() {
         double lon = 0.4;
         double lat = 38.51;
+
+
         assertEquals("Make sure you're using the great circle distance, "
                 + "especially if your actual value is 46",
                 55L, graphTiny.closest(lon, lat));

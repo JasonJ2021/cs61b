@@ -2,9 +2,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  *  Parses OSM XML files using an XML SAX parser. Used to construct the graph of roads for
@@ -39,12 +37,17 @@ public class GraphBuildingHandler extends DefaultHandler {
     private String activeState = "";
     private final GraphDB g;
 
+    private ArrayList<Long> tempConnection;
+    private long lastNode;
+    private long wayLastNode;
+    private boolean flag = false;
     /**
      * Create a new GraphBuildingHandler.
      * @param g The graph to populate with the XML data.
      */
     public GraphBuildingHandler(GraphDB g) {
         this.g = g;
+        tempConnection = new ArrayList<>();
     }
 
     /**
@@ -74,14 +77,22 @@ public class GraphBuildingHandler extends DefaultHandler {
 
             /* TODO Use the above information to save a "node" to somewhere. */
             /* Hint: A graph-like structure would be nice. */
-
+//            Node(long id , double lat , double lon)
+            long id = Long.parseLong(attributes.getValue("id"));
+            double lon = Double.parseDouble(attributes.getValue("lon"));
+            double lat = Double.parseDouble(attributes.getValue("lat"));
+            GraphDB.Node x = new GraphDB.Node(id,lat,lon);
+            g.graph.put(id,x);
+//            System.out.println(x);
+//            System.out.println(g.graph.size());
+            lastNode = id;
         } else if (qName.equals("way")) {
             /* We encountered a new <way...> tag. */
             activeState = "way";
 //            System.out.println("Beginning a way...");
         } else if (activeState.equals("way") && qName.equals("nd")) {
             /* While looking at a way, we found a <nd...> tag. */
-            //System.out.println("Id of a node in this way: " + attributes.getValue("ref"));
+//            System.out.println("Id of a node in this way: " + attributes.getValue("ref"));
 
             /* TODO Use the above id to make "possible" connections between the nodes in this way */
             /* Hint1: It would be useful to remember what was the last node in this way. */
@@ -89,7 +100,8 @@ public class GraphBuildingHandler extends DefaultHandler {
             cumbersome since you might have to remove the connections if you later see a tag that
             makes this way invalid. Instead, think of keeping a list of possible connections and
             remember whether this way is valid or not. */
-
+            wayLastNode = Long.parseLong(attributes.getValue("ref"));
+            tempConnection.add(wayLastNode);
         } else if (activeState.equals("way") && qName.equals("tag")) {
             /* While looking at a way, we found a <tag...> tag. */
             String k = attributes.getValue("k");
@@ -101,6 +113,9 @@ public class GraphBuildingHandler extends DefaultHandler {
                 //System.out.println("Highway type: " + v);
                 /* TODO Figure out whether this way and its connections are valid. */
                 /* Hint: Setting a "flag" is good enough! */
+                if(ALLOWED_HIGHWAY_TYPES.contains(v)){
+                    flag = true;
+                }
             } else if (k.equals("name")) {
                 //System.out.println("Way Name: " + v);
             }
@@ -113,6 +128,10 @@ public class GraphBuildingHandler extends DefaultHandler {
             node this tag belongs to. Remember XML is parsed top-to-bottom, so probably it's the
             last node that you looked at (check the first if-case). */
 //            System.out.println("Node's name: " + attributes.getValue("v"));
+            String name = attributes.getValue("v");
+            GraphDB.Node node = g.graph.get(lastNode);
+            node.setName(name);
+
         }
     }
 
@@ -134,6 +153,28 @@ public class GraphBuildingHandler extends DefaultHandler {
             /* Hint1: If you have stored the possible connections for this way, here's your
             chance to actually connect the nodes together if the way is valid. */
 //            System.out.println("Finishing a way...");
+            if(flag == true){
+                Iterator<Long> iterator = tempConnection.iterator();
+                if(tempConnection.size() == 1){
+                    flag = false;
+                    tempConnection.clear();
+                    return;
+                }
+                long front , behind;
+                front = iterator.next();
+                behind = iterator.next();
+                while(behind != wayLastNode){
+                    g.addEdge(front , behind);
+                    if(front == 1790732915L) System.out.println("What??? ? ");
+                    front = behind;
+                    behind = iterator.next();
+                }
+                g.addEdge(front , behind);
+                tempConnection.clear();
+                flag = false;
+            }else{
+                tempConnection.clear();
+            }
         }
     }
 
