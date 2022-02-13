@@ -16,6 +16,8 @@ public class BreadthFirstDemo {
 
         MazeExplorer mbfp = new MazeBreadthFirstPaths(maze, startX, startY, targetX, targetY);
         mbfp.solve();
+//        MazeExplorer mbfp = new MazeAStarPath(maze, startX, startY, targetX, targetY);
+//        mbfp.solve();
     }
 
 }
