@@ -107,6 +107,7 @@ public class MergeSort {
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
+        if(items.isEmpty())return items;
         Queue<Queue<Item>> queue = makeSingleItemQueues(items);
         while (queue.size() > 1) {
             Queue<Item> q1 = queue.dequeue();
@@ -119,12 +120,12 @@ public class MergeSort {
 
     public static void main(String[] args) {
         Queue<String> students1 = new Queue<>();
-        students1.enqueue("Alice");
-        students1.enqueue("Ethan");
-        students1.enqueue("Vanessa");
-        students1.enqueue("Black");
-        students1.enqueue("Dad");
-        students1.enqueue("Zack");
+//        students1.enqueue("Alice");
+//        students1.enqueue("Ethan");
+//        students1.enqueue("Vanessa");
+//        students1.enqueue("Black");
+//        students1.enqueue("Dad");
+//        students1.enqueue("Zack");
 
         System.out.println("==========Before Sort================");
         System.out.println(students1);

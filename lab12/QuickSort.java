@@ -51,8 +51,7 @@ public class QuickSort {
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
 
-        while (!unsorted.isEmpty()) {
-            Item item = unsorted.dequeue();
+        for(Item item : unsorted){
             if (item.compareTo(pivot) < 0) {
                 less.enqueue(item);
             } else if (item.compareTo(pivot) > 0) {
@@ -61,6 +60,16 @@ public class QuickSort {
                 equal.enqueue(item);
             }
         }
+//        while (!unsorted.isEmpty()) {
+//            Item item = unsorted.dequeue();
+//            if (item.compareTo(pivot) < 0) {
+//                less.enqueue(item);
+//            } else if (item.compareTo(pivot) > 0) {
+//                greater.enqueue(item);
+//            } else {
+//                equal.enqueue(item);
+//            }
+//        }
     }
 
     /**
@@ -106,5 +115,6 @@ public class QuickSort {
         Queue<String> sortedStudents = quickSort(students1);
         System.out.println("==========After Sort=================");
         System.out.println(sortedStudents);
+        System.out.println(students1);
     }
 }
